@@ -7,6 +7,7 @@ namespace AsaniSample.Models
 {
    public class Owner
     {
+        [Key]
         public Guid Id { get; set; }
 
         [MaxLength(200)]
@@ -22,7 +23,8 @@ namespace AsaniSample.Models
         [Required]
         public string Phone { get; set; }
 
-
+        //navigational property
+        public ICollection<Estate> Estates { get; set; } = new List<Estate>();
 
     }
 }

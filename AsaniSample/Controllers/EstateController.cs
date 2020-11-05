@@ -7,14 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AsaniSample.Controllers
 {
-    [Route("api/owner")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class OwnerController : ControllerBase
+    public class EstateController : ControllerBase
     {
-
-        public ActionResult<> Get()
-        {
-
-        }
     }
 }
