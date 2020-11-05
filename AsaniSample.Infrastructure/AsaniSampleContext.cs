@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using AsaniSample.Models;
+using AsaniSample.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AsaniSample.DataAccess.Data
+namespace AsaniSample.Infrastructure
 {
    public class AsaniSampleContext : DbContext
     {

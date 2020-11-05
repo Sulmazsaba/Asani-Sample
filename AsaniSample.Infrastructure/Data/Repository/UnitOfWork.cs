@@ -1,6 +1,6 @@
-﻿using AsaniSample.DataAccess.Data.Repository.IRepository;
+﻿using AsaniSample.Infrastructure.Data.Repository.IRepository;
 
-namespace AsaniSample.DataAccess.Data.Repository
+namespace AsaniSample.Infrastructure.Data.Repository
 {
   public  class UnitOfWork : IUnitOfWork
   {
@@ -9,6 +9,7 @@ namespace AsaniSample.DataAccess.Data.Repository
       public UnitOfWork(AsaniSampleContext context)
       {
           this.context = context;
+          EstateRepository=new EstateRepository(context);
       }
 
       public void Dispose()

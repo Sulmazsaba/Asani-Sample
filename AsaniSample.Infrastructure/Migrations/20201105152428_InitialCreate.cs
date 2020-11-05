@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AsaniSample.DataAccess.Migrations
+namespace AsaniSample.Infrastructure.Migrations
 {
     public partial class InitialCreate : Migration
     {

@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AsaniSample.DataAccess;
-using AsaniSample.DataAccess.Data;
+using AsaniSample.Infrastructure;
+using AsaniSample.Infrastructure.Data.Repository;
+using AsaniSample.Infrastructure.Data.Repository.IRepository;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +38,10 @@ namespace AsaniSample
             });
 
             services.AddSwaggerGen();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
+            services.AddScoped<IEstateRepository,EstateRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

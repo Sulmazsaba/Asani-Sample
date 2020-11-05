@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using AsaniSample.DataAccess.Data.Repository.IRepository;
+using AsaniSample.Infrastructure.Data.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace AsaniSample.DataAccess.Data.Repository
+namespace AsaniSample.Infrastructure.Data.Repository
 {
    public class Repository<T> : IRepository<T> where T : class
    {

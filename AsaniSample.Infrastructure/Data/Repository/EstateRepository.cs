@@ -1,7 +1,7 @@
-﻿using AsaniSample.DataAccess.Data.Repository.IRepository;
-using AsaniSample.Models;
+﻿using AsaniSample.Core.Entities;
+using AsaniSample.Infrastructure.Data.Repository.IRepository;
 
-namespace AsaniSample.DataAccess.Data.Repository
+namespace AsaniSample.Infrastructure.Data.Repository
 {
    public class EstateRepository :Repository<Estate>,IEstateRepository
     {

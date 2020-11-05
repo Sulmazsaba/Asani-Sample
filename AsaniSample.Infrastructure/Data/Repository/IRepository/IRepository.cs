@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace AsaniSample.DataAccess.Data.Repository.IRepository
+namespace AsaniSample.Infrastructure.Data.Repository.IRepository
 {
    public interface IRepository<T> where T:class
    {

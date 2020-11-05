@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AsaniSample.DataAccess.Data.Repository.IRepository
+namespace AsaniSample.Infrastructure.Data.Repository.IRepository
 {
    public interface IUnitOfWork : IDisposable
     {
