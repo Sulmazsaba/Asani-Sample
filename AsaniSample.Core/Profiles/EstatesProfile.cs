@@ -21,8 +21,8 @@ namespace AsaniSample.Core.Profiles
 
                 .ForMember(dest => dest.Type,
                 opt =>
-                    opt.MapFrom(src => src.Type.GetDescription()));
-
+                    opt.MapFrom(src => src.Type.GetDescription()))
+                .IncludeMembers(src=>src.Owner);
 
             CreateMap<EstateForManipulationDto, Estate>();
         }

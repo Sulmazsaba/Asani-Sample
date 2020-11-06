@@ -16,6 +16,7 @@ namespace AsaniSample.Core.Profiles
                     opt.MapFrom(src=>src.FirstName + " "+src.LastName));
               
           
+            CreateMap<Owner,EstateDto>();
         }
     }
 }
