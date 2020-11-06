@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AsaniSample.Core.DTOs;
 using AsaniSample.Core.Entities;
-using AsaniSample.Core.Interfaces;
 using AsaniSample.Infrastructure.Data.Repository.IRepository;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -51,7 +50,7 @@ namespace AsaniSample.Controllers
 
 
         [HttpPost]
-        public ActionResult<EstateDto> CreateEstateForOwner(Guid ownerId,EstateForCreationDto dto)
+        public ActionResult<EstateDto> CreateEstateForOwner(Guid ownerId,EstateForManipulationDto dto)
         {
             var existOwner = unitOfWork.OwnerRepository.Get(ownerId)!=null;
             if (!existOwner)
@@ -64,7 +63,7 @@ namespace AsaniSample.Controllers
             var estateToReturn = mapper.Map<EstateDto>(entity);
 
             return CreatedAtRoute("GetEstateForOwner",
-                new {ownerId=ownerId,id=entity.Id },
+                new {ownerId,id=entity.Id },
                 estateToReturn);
         }
 
@@ -87,6 +86,24 @@ namespace AsaniSample.Controllers
             return NoContent();
         }
 
+        [HttpPut("{estateId}")]
+        public IActionResult UpdateEstateForOwner(Guid ownerId, Guid estateId, 
+            EstateForManipulationDto dto)
+        {
+            var existOwner = unitOfWork.OwnerRepository.Get(ownerId)!=null;
+            if (!existOwner)
+                return NotFound();
+            
+            var entity = unitOfWork.EstateRepository.Get(estateId);
+            if (entity == null)
+                return NotFound();
+
+            mapper.Map(dto, entity);
+            unitOfWork.EstateRepository.Update(entity);
+            unitOfWork.Commit();
+
+            return NoContent();
+        }
 
 
     }

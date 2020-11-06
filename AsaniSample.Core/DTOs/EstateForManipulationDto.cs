@@ -5,7 +5,7 @@ using AsaniSample.Core.Entities.Enums;
 
 namespace AsaniSample.Core.DTOs
 {
-   public class EstateForCreationDto
+   public class EstateForManipulationDto
     {
         public string Name { get; set; }
         public int Area { get; set; }

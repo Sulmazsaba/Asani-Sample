@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using AsaniSample.Core.Entities.Enums;
 
 namespace AsaniSample.Core.Entities
 {
@@ -12,7 +13,7 @@ namespace AsaniSample.Core.Entities
         [MaxLength(200)]
         public string Name { get; set; }
         public int Area { get; set; }
-        public StatementType Type { get; set; }
+        public EstateType Type { get; set; }
         public string Address { get; set; }
         public bool IsDeleted { get; set; } = false;
 
