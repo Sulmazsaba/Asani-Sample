@@ -5,22 +5,25 @@ namespace AsaniSample.Infrastructure.Data.Repository
   public  class UnitOfWork : IUnitOfWork
   {
       private readonly AsaniSampleContext context;
+      private IEstateRepository _estateRepository;
+      private IOwnerRepository _ownerRepository;
 
       public UnitOfWork(AsaniSampleContext context)
       {
           this.context = context;
-          EstateRepository=new EstateRepository(context);
       }
 
-      public void Dispose()
-        {
-           context.Dispose();
-        }
 
-        public IEstateRepository EstateRepository { get; private set; }
+      public IEstateRepository EstateRepository => _estateRepository ?? new EstateRepository(context);
+      public IOwnerRepository OwnerRepository => _ownerRepository ?? new OwnerRepository(context);
+
         public void Commit()
         {
             context.SaveChanges();
+        }
+        public void Dispose()
+        {
+           context.Dispose();
         }
     }
 }

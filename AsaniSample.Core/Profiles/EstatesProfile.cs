@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using AsaniSample.Core.DTOs;
 using AsaniSample.Core.Entities;
@@ -11,7 +12,10 @@ namespace AsaniSample.Core.Profiles
     {
         public EstatesProfile()
         {
-            CreateMap<Estate, EstateDto>();
+         
+            CreateMap<Estate, EstateDto>().ForMember(dest=>dest.OwnerName,
+            opt=>opt.MapFrom(src=>src.Owner.FirstName + " " + src.Owner.LastName));
+            CreateMap<EstateForCreationDto, Estate>();
         }
     }
 }

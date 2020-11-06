@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AsaniSample.Core.DTOs;
+using AsaniSample.Core.Entities;
 using AsaniSample.Core.Interfaces;
 using AsaniSample.Infrastructure.Data.Repository.IRepository;
 using AutoMapper;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AsaniSample.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/owners/{ownerId}/estates")]
     [ApiController]
     public class EstatesController : ControllerBase
     {
@@ -24,13 +25,69 @@ namespace AsaniSample.Controllers
         }
 
         [HttpGet(Name = "GetEstates")]
-        public ActionResult<IEnumerable<EstateDto>> GetEstates()
-        {
-            var estatesFromRepo = unitOfWork.EstateRepository.Get(i=>!i.IsDeleted);
-            if (!estatesFromRepo.Any())
+        public ActionResult<IEnumerable<EstateDto>> GetEstates(Guid ownerId)
+        { 
+            var existOwner = unitOfWork.OwnerRepository.Get(ownerId)!=null;
+            if (!existOwner)
                 return NotFound();
 
+            var estatesFromRepo = unitOfWork.EstateRepository.Get(i=>!i.IsDeleted&&i.OwnerId==ownerId);
             return Ok(mapper.Map<IEnumerable<EstateDto>>(estatesFromRepo));
         }
+
+        [HttpGet("{id}",Name = "GetEstateForOwner")]
+        public ActionResult<EstateDto> GetEstateForOwner(Guid ownerId,Guid id)
+        {
+            var existOwner = unitOfWork.OwnerRepository.Get(ownerId)!=null;
+            if (!existOwner)
+                return NotFound();
+
+            var entity=unitOfWork.EstateRepository.GetEstate(id);
+            if (entity == null)
+                return NotFound();
+
+            return Ok(mapper.Map<EstateDto>(entity));
+        }
+
+
+        [HttpPost]
+        public ActionResult<EstateDto> CreateEstateForOwner(Guid ownerId,EstateForCreationDto dto)
+        {
+            var existOwner = unitOfWork.OwnerRepository.Get(ownerId)!=null;
+            if (!existOwner)
+                return NotFound();
+
+            var entity = mapper.Map<Estate>(dto);
+            unitOfWork.EstateRepository.AddEstate(entity);
+            unitOfWork.Commit();
+
+            var estateToReturn = mapper.Map<EstateDto>(entity);
+
+            return CreatedAtRoute("GetEstateForOwner",
+                new {ownerId=ownerId,id=entity.Id },
+                estateToReturn);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEstateForOwner(Guid ownerId,Guid id)
+        {
+
+            var existOwner = unitOfWork.OwnerRepository.Get(ownerId)!=null;
+            if (!existOwner)
+                return NotFound();
+
+            var entity = unitOfWork.EstateRepository.GetFirstOrDefault(i => i.Id == id);
+            if (entity == null)
+                return NotFound();
+
+
+            unitOfWork.EstateRepository.RemoveLogicalEstate(entity);
+            unitOfWork.Commit();
+
+            return NoContent();
+        }
+
+
+
     }
 }

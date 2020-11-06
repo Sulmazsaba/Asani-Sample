@@ -20,6 +20,8 @@ namespace AsaniSample.Infrastructure.Data.Repository
 
        public T Get(Guid id)
        {
+           if(id==Guid.Empty)
+               throw new ArgumentNullException(nameof(T));
           return dbSet.Find(id);
        }
 
